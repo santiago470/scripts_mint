@@ -3,6 +3,10 @@
 # ║        SPEEDTEST VISUAL - by snats       ║
 # ╚══════════════════════════════════════════╝
 
+# Força ponto como separador decimal (evita erros com locale pt_PT)
+export LC_NUMERIC=C
+export LC_ALL=C
+
 # ── Colors & Styles ──────────────────────────────────────────────────────────
 RESET='\033[0m'
 BOLD='\033[1m'
@@ -326,7 +330,7 @@ FULL_OUTPUT=$(speedtest-cli 2>&1)
 SERVER_LINE=$(echo "$FULL_OUTPUT" | grep -i "Hosted by" | head -1)
 ISP_LINE=$(   echo "$FULL_OUTPUT" | grep -i "Testing from" | head -1)
 
-section "Informações da Ligação"
+section "🌐  Informações da Ligação"
 echo ""
 if [[ -n "$ISP_LINE" ]]; then
     echo -e "  ${BRIGHT_WHITE}ISP   ${DIM}${ISP_LINE#*from }${RESET}"
@@ -355,7 +359,7 @@ sleep 0.1
 draw_ping_bar "$PING"
 
 # ── Quality ────────────────────────────────────────────────────────────────────
-section "Avaliação da Ligação"
+section "⭐  Avaliação da Ligação"
 echo ""
 
 IFS='|' read -r score label color emoji <<< "$(rate_connection "$DL" "$UL" "$PING")"
@@ -373,7 +377,7 @@ for ((i=score_filled; i<BAR_MAX; i++)); do score_empty_bar+="░"; done
 echo -e "  ${BOLD}${BRIGHT_WHITE}Qualidade   ${RESET}${color}${score_bar}${DIM}${score_empty_bar}${RESET}  ${BOLD}${color}${score}/10${RESET}"
 
 # ── Usage guide ───────────────────────────────────────────────────────────────
-section "Para que serve esta velocidade?"
+section "💡  Para que serve esta velocidade?"
 echo ""
 
 echo -e "  ${DIM}Download: ${RESET}${BOLD}${BRIGHT_CYAN}${DL} Mbps${RESET}"
@@ -393,7 +397,7 @@ printf "  ${BRIGHT_WHITE}%-28s${RESET} ${BRIGHT_GREEN}%s simultâneos${RESET}\n"
 printf "  ${BRIGHT_WHITE}%-28s${RESET} ${BRIGHT_GREEN}%s videochamadas HD${RESET}\n" "▸ Zoom/Teams"                   "$zoom"
 
 # ── Summary table ─────────────────────────────────────────────────────────────
-section "Resumo"
+section "📋  Resumo"
 echo ""
 printf "  ${DIM}┌─────────────────┬──────────────────┐${RESET}\n"
 printf "  ${DIM}│${RESET} ${BRIGHT_WHITE}%-15s${RESET} ${DIM}│${RESET} ${BOLD}${BRIGHT_CYAN}%-16s${RESET}${DIM}│${RESET}\n" "Download" "${DL} Mbit/s"
